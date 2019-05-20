@@ -91,46 +91,85 @@ namespace Idp
                         IdentityServerConstants.StandardScopes.Profile
                     }
                 },
-                // MVC client using hybrid flow
+                // vue, implicit flow
                 new Client
                 {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
-
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
-
-                    RedirectUris = { "http://localhost:5001/signin-oidc" },
-                    FrontChannelLogoutUri = "http://localhost:5001/signout-oidc",
-                    PostLogoutRedirectUris = { "http://localhost:5001/signout-callback-oidc" },
-
-                    AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "CZHSoftApi" }
-                },
-
-                // SPA client using implicit flow
-                new Client
-                {
-                    ClientId = "spa",
-                    ClientName = "SPA Client",
-                    ClientUri = "http://identityserver.io",
+                    ClientId = "vue-client",
+                    ClientName =  "Vue SPA 客户端",
+                    ClientUri = "http://localhost:4003",
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
+                    RequireConsent = true,
+                    AccessTokenLifetime = 60 * 5,
 
                     RedirectUris =
                     {
-                        "http://localhost:5002/index.html",
-                        "http://localhost:5002/callback.html",
-                        "http://localhost:5002/silent.html",
-                        "http://localhost:5002/popup.html",
+                        "http://localhost:4003/signin-oidc",
+                        "http://localhost:4003/redirect-silentrenew"
                     },
 
-                    PostLogoutRedirectUris = { "http://localhost:5002/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:5002" },
+                    PostLogoutRedirectUris =
+                    {
+                        "http://localhost:4003"
+                    },
 
-                    AllowedScopes = { "openid", "profile", "CZHSoftApi" }
+                    AllowedCorsOrigins =
+                    {
+                        "http://localhost:4003",
+                        "http://192.168.1.189:4003"
+                    },
+
+                    AllowedScopes = {
+                        "CZHSoftApi",
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Phone,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
+
+                //// MVC client using hybrid flow
+                //new Client
+                //{
+                //    ClientId = "mvc",
+                //    ClientName = "MVC Client",
+
+                //    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                //    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+
+                //    RedirectUris = { "http://localhost:5001/signin-oidc" },
+                //    FrontChannelLogoutUri = "http://localhost:5001/signout-oidc",
+                //    PostLogoutRedirectUris = { "http://localhost:5001/signout-callback-oidc" },
+
+                //    AllowOfflineAccess = true,
+                //    AllowedScopes = { "openid", "profile", "CZHSoftApi" }
+                //},
+
+                //// SPA client using implicit flow
+                //new Client
+                //{
+                //    ClientId = "spa",
+                //    ClientName = "SPA Client",
+                //    ClientUri = "http://identityserver.io",
+
+                //    AllowedGrantTypes = GrantTypes.Implicit,
+                //    AllowAccessTokensViaBrowser = true,
+
+                //    RedirectUris =
+                //    {
+                //        "http://localhost:5002/index.html",
+                //        "http://localhost:5002/callback.html",
+                //        "http://localhost:5002/silent.html",
+                //        "http://localhost:5002/popup.html",
+                //    },
+
+                //    PostLogoutRedirectUris = { "http://localhost:5002/index.html" },
+                //    AllowedCorsOrigins = { "http://localhost:5002" },
+
+                //    AllowedScopes = { "openid", "profile", "CZHSoftApi" }
+                //}
             };
         }
     }

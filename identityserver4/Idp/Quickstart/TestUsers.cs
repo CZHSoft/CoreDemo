@@ -13,31 +13,43 @@ namespace IdentityServer4.Quickstart.UI
     {
         public static List<TestUser> Users = new List<TestUser>
         {
-            new TestUser{SubjectId = "818727", Username = "alice", Password = "alice", 
-                Claims = 
+            new TestUser{SubjectId = "88888888", Username = "czhsoft", Password = "czhsoft",
+                Claims =
                 {
-                    new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                    new Claim(JwtClaimTypes.GivenName, "Alice"),
-                    new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                    new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
+                    new Claim(JwtClaimTypes.Name, "czhsoft"),
+                    new Claim(JwtClaimTypes.GivenName, "zh"),
+                    new Claim(JwtClaimTypes.FamilyName, "chen"),
+                    new Claim(JwtClaimTypes.Email, "chenandczh@163.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                    new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
+                    new Claim(JwtClaimTypes.WebSite, "https://github.com/CZHSoft"),
+                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'jiangbin road', 'locality': 'Foshan', 'postal_code': 528000, 'country': 'China' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
                 }
             },
-            new TestUser{SubjectId = "88421113", Username = "bob", Password = "bob", 
-                Claims = 
-                {
-                    new Claim(JwtClaimTypes.Name, "Bob Smith"),
-                    new Claim(JwtClaimTypes.GivenName, "Bob"),
-                    new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                    new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),
-                    new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                    new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
-                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
-                    new Claim("location", "somewhere")
-                }
-            }
+            //new TestUser{SubjectId = "818727", Username = "alice", Password = "alice", 
+            //    Claims = 
+            //    {
+            //        new Claim(JwtClaimTypes.Name, "Alice Smith"),
+            //        new Claim(JwtClaimTypes.GivenName, "Alice"),
+            //        new Claim(JwtClaimTypes.FamilyName, "Smith"),
+            //        new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
+            //        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+            //        new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+            //        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
+            //    }
+            //},
+            //new TestUser{SubjectId = "88421113", Username = "bob", Password = "bob", 
+            //    Claims = 
+            //    {
+            //        new Claim(JwtClaimTypes.Name, "Bob Smith"),
+            //        new Claim(JwtClaimTypes.GivenName, "Bob"),
+            //        new Claim(JwtClaimTypes.FamilyName, "Smith"),
+            //        new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),
+            //        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+            //        new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
+            //        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
+            //        new Claim("location", "somewhere")
+            //    }
+            //}
         };
     }
 }
