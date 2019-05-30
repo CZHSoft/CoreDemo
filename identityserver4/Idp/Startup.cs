@@ -9,6 +9,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Idp.Db;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Collections.Generic;
+using Idp.BLL;
+using IdentityServer4.Validation;
+using IdentityServer4.Services;
 
 namespace Idp
 {
@@ -25,6 +32,14 @@ namespace Idp
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //add ef core sqlite
+            string connecttext = Configuration.GetConnectionString("UserContext");
+            services.AddDbContext<UserContext>(options => options.UseSqlite(connecttext));
+
+            //my user repository
+            services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
 
             services.Configure<IISOptions>(options =>
@@ -40,12 +55,18 @@ namespace Idp
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
             })
-                .AddTestUsers(TestUsers.Users);
+                .AddProfileService<ProfileService>();
+                //.AddResourceOwnerValidator<LoginValidator>();
+            //.AddTestUsers(TestUsers.Users);
+
 
             // in-memory, code config
             builder.AddInMemoryIdentityResources(Config.GetIdentityResources());
             builder.AddInMemoryApiResources(Config.GetApis());
             builder.AddInMemoryClients(Config.GetClients());
+
+            //services.AddTransient<IResourceOwnerPasswordValidator, LoginValidator>();
+            //services.AddTransient<IProfileService, ProfileService>();
 
             // in-memory, json config
             //builder.AddInMemoryIdentityResources(Configuration.GetSection("IdentityResources"));
@@ -72,6 +93,7 @@ namespace Idp
                     options.ClientId = "copy client ID from Google here";
                     options.ClientSecret = "copy client secret from Google here";
                 });
+
         }
 
         public void Configure(IApplicationBuilder app)
@@ -81,9 +103,48 @@ namespace Idp
                 app.UseDeveloperExceptionPage();
             }
 
+            InitDataBase(app);
+
             app.UseIdentityServer();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+        }
+
+        /// <summary>
+        /// 初始化 sqlite数据
+        /// </summary>
+        /// <param name="app"></param>
+        public void InitDataBase(IApplicationBuilder app)
+        {
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetRequiredService<UserContext>().Database.Migrate();
+
+                var context = serviceScope.ServiceProvider.GetRequiredService<UserContext>();
+                context.Database.Migrate();
+                if (!context.Users.Any())
+                {
+                    User user = new User()
+                    {
+                        //UserId = "1",
+                        UserName = "czhsoft",
+                        Password = "czhsoft",
+                        IsActive = true,
+                        Claims = new List<Claims>
+                        {
+                            new Claims(){ Type="role", Value="admin" },
+                            new Claims(){ Type="name", Value="czhsoft" },
+                            new Claims(){ Type="given_name", Value="zh" },
+                            new Claims(){ Type="family_name", Value="chen" },
+                            new Claims(){ Type="email", Value="chenandczh@163.com" },
+                            new Claims(){ Type="website", Value="https://github.com/CZHSoft" },
+                        }
+                    };
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }
