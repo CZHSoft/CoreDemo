@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ShopModel.ProductViewModel> 
+
+<div class="container">
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var al in @Model)
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 py-3 px-lg-5 ">
+                    <partial name="_ProductDetail" model="al" />
+                </div>
+            }
+        </div>
+    }
+</div>
+
+

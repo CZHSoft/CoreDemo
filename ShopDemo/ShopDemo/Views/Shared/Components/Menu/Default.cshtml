@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ShopModel.MenuViewModel> 
+
+<style>
+    ul li {
+        color: purple;
+        font-style: italic;
+    }
+</style>
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var tag in Model)
+        {
+            <li>
+                [@tag.id] @tag.name
+            </li>
+        }
+    </ul>
+}

@@ -1,0 +1,14 @@
+﻿@model ShopModel.ProductViewModel
+
+<div class="card" style="width: 100%;">
+    <img src="@Model.url" class="card-img-top" alt="@Model.title">
+    <div class="card-body">
+        <h5 class="card-title">@Model.title</h5>
+        <p class="card-text">
+            by chen @@ @Model.date.ToString("yyyy-MM-dd")
+        </p>
+        @*<a asp-action="Details" asp-route-id="@Model.id" class="btn btn-secondary">查看明细</a>
+        <a asp-action="Edit" asp-route-id="@Model.id" class="btn btn-primary">编辑</a>
+        <a asp-action="Delete" asp-route-id="@Model.id" class="btn btn-danger">删除</a>*@
+    </div>
+</div>
